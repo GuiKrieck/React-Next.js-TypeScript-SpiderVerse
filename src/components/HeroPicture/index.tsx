@@ -17,8 +17,6 @@ const heroesImage: Record<string, StaticImageData> = {
   "spider-ham-8311": ImageSpiderHam8311,
   "spider-man-90214": ImageSpiderMan90214,
   "spider-man-928": ImageSpiderMan928,
-
-
 }
 
 interface IProps {
