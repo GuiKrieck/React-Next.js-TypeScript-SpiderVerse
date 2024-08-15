@@ -4,7 +4,11 @@
   height: 100%;
   width: 100%;
   transition: background 1s ease-in-out;
-  background-size: cover;
+
+  &.hero-page {
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
   &:not(.hero-page)::before {
     content: "";
@@ -23,6 +27,12 @@ body {
   max-width: $max-width;
   height: calc(100vh - 3.5rem);
   overflow: hidden;
+
+  &:not(.hero-page) {
+    @media screen and (max-width: 1300px) {
+      overflow: visible;
+    }
+  }
 }
 
 header {

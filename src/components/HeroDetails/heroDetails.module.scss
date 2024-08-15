@@ -1,3 +1,5 @@
+@import "@/app/variables.scss";
+
 .title {
   font-size: 3.5rem;
   margin: 0;
@@ -13,16 +15,58 @@
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   margin: 1rem 0;
   padding: 1rem 0;
-  width: 70%;
-
   .table {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     td {
+      flex: 1;
       font-weight: 600;
       padding-right: 2rem;
+      text-align: left;
     }
 
     .label {
       font-weight: normal;
     }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .spider-man-616,
+  .mulher-aranha-65,
+  .spider-man-1610,
+  .sp-dr-14512,
+  .spider-ham-8311,
+  .spider-man-90214,
+  .spider-man-928 {
+    position: absolute;
+    width: 100%;
+    top: -120px;
+    padding-top: 100px;
+  }
+
+  .spider-man-616 {
+    background: $spider-man-616-gradient;
+  }
+  .mulher-aranha-65 {
+    background: $spider-woman-65-gradient;
+  }
+  .spider-man-1610 {
+    background: $spider-man-1610-gradient;
+  }
+  .sp-dr-14512 {
+    background: $sp-dr-14512-gradient;
+  }
+  .spider-ham-8311 {
+    background: $spider-ham-8311-gradient;
+  }
+  .spider-man-90214 {
+    background: $spider-man-90214-gradient;
+  }
+  .spider-man-928 {
+    background: $spider-man-928-gradient;
   }
 }

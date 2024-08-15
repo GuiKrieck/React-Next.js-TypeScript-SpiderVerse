@@ -19,8 +19,16 @@ export default function HeroesList({ heroes }: IProps) {
   const [screenSize, setScreenSize] = useState<number>(0);
 
   useEffect(() => {
-    window.addEventListener('resize', () => setScreenSize(window.innerWidth));
-  }, []);
+    if (typeof window !== "undefined") {
+      setScreenSize(window.innerWidth);
+
+      const handleResize = () => setScreenSize(window.innerWidth);
+
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [])
 
   return (
     <>

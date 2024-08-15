@@ -19,7 +19,7 @@ interface Iprops {
 export default function HeroDetails({ data }: Iprops) {
   const { id, name, universe, details } = data;
   return (
-    <div className={quickSand.className}>
+    <div className={`${quickSand.className} ${styles[id]}`} >
       <h1 className={`${styles.title} ${spidermanFont.className}`}>{name} (Universo-{universe})</h1>
       <div className={styles.details}>
         <h2 className={styles.subtitle}>Informações</h2>

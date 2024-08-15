@@ -27,6 +27,19 @@ export default function Carousel({ heroes, activeID }: IProps) {
     heroes.findIndex((hero) => hero.id === activeID) - 1
   );
   const [startInteractionPosition, setStartInteractionPosition] = useState<number>(0);
+  const [screenSize, setScreenSize] = useState<number>(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setScreenSize(window.innerWidth);
+
+      const handleResize = () => setScreenSize(window.innerWidth);
+
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [])
 
   const transitionAudio = useMemo(() => new Audio("/songs/transition.mp3"), []);
 
@@ -116,6 +129,7 @@ export default function Carousel({ heroes, activeID }: IProps) {
     const newPosition = diffPosition > 0 ? -1 : 1;
     handleChangeActiveIndex(newPosition);
   }
+
   if (!visibleItems) {
     return null;
   }
@@ -132,16 +146,29 @@ export default function Carousel({ heroes, activeID }: IProps) {
         >
           <AnimatePresence mode="popLayout">
             {visibleItems.map((item, position) => (
-              <motion.div
-                key={item.id}
-                className={styles.hero}
-                initial={{ x: -1500, scale: 0.75 }}
-                animate={{ x: 0, ...getItemStyles(position) }}
-                transition={{ duration: 0.8 }}
-                exit={{ x: 0, opacity: 0, scale: 1, left: "-20%" }}
-              >
-                <HeroPicture hero={item} />
-              </motion.div>
+              screenSize > 1300
+                ?
+                <motion.div
+                  key={item.id}
+                  className={styles.hero}
+                  initial={{ x: -1500, scale: 0.75 }}
+                  animate={{ x: 0, ...getItemStyles(position) }}
+                  transition={{ duration: 0.8 }}
+                  exit={{ x: 0, opacity: 0, scale: 1, left: "-20%" }}
+                >
+                  <HeroPicture hero={item} />
+                </motion.div>
+                :
+                <motion.div
+                  key={item.id}
+                  className={styles.hero}
+                  initial={{ x: 1500, y: 1500, scale: 0.75 }}
+                  animate={{ ...getMobileItemStyles(position) }}
+                  transition={{ duration: 0.8 }}
+                  exit={{ x: 0, opacity: 0, scale: 1, left: "-20%" }}
+                >
+                  <HeroPicture hero={item} />
+                </motion.div>
             ))}
           </AnimatePresence>
         </div>
@@ -181,6 +208,35 @@ const getItemStyles = (position: enPosition) => {
     filter: "blur(10px)",
     left: 160,
     top: "-20%",
+    scale: 0.6,
+  }
+}
+
+const getMobileItemStyles = (position: enPosition) => {
+  if (position === enPosition.FRONT) {
+    return {
+      zIndex: 3,
+      filter: "blur(10px)",
+      x: "-40vw",
+      scale: 1.4,
+      y: "25%",
+    }
+  }
+
+  if (position === enPosition.MIDDLE) {
+    return {
+      zIndex: 2,
+      x: 130,
+      scale: 1.1,
+      y: "10%"
+    }
+  }
+
+  return {
+    zIndex: 1,
+    filter: "blur(10px)",
+    x: "50vw",
+    y: "-20%",
     scale: 0.6,
   }
 }
